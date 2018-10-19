@@ -32,6 +32,7 @@ module Squib
     def png(file, box, paint, trans)
       Squib.logger.debug {"RENDERING PNG: \n  file: #{file}\n  box: #{box}\n  paint: #{paint}\n  trans: #{trans}"}
       return if file.nil? or file.eql? ''
+      return if zero_sized? box
       png = Squib.cache_load_image(file)
       use_cairo do |cc|
         cc.translate(box.x, box.y)
@@ -75,12 +76,24 @@ module Squib
       end
     end
 
+    def zero_sized?(box)
+      if(box.width == 0 || box.height == 0)
+        if @deck.conf.warn_zero_size_image?
+          Squib.logger.warn "png: zero-sized width or height detected for #{file}. SVG not drawn."
+        end
+        return true
+      else
+          return false
+      end
+    end
+
     # :nodoc:
     # @api private
     def svg(file, svg_args, box, paint, trans)
       Squib.logger.debug {"Rendering: #{file}, id: #{id} @#{x},#{y} #{width}x#{height}, alpha: #{alpha}, blend: #{blend}, angle: #{angle}, mask: #{mask}"}
       Squib.logger.warn 'Both an SVG file and SVG data were specified' unless file.to_s.empty? || svg_args.data.to_s.empty?
       return if (file.nil? or file.eql? '') and svg_args.data.nil? # nothing specified TODO Move this out to arg validator
+      return if zero_sized? box
       svg_args.data = File.read(file) if svg_args.data.to_s.empty?
       begin
         svg = Rsvg::Handle.new_from_data(svg_args.data)

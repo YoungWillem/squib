@@ -35,6 +35,7 @@ module Squib
       'text_hint'     => 'off',
       'warn_ellipsize' => true,
       'warn_png_scale' => true,
+      'warn_zero_size_image' => true,
     }
 
     # Translate the hints to the methods.
@@ -119,6 +120,10 @@ module Squib
 
     def warn_png_scale?
       @config_hash['warn_png_scale']
+    end
+    
+    def warn_zero_size_image?
+      @config_hash['warn_zero_size_image']
     end
 
     private
