@@ -117,8 +117,10 @@ You can also **modify** data as they get passed through extends::
 The following operators are supported within evaluating ``extends``
   * ``+=`` will add the giuven number to the inherited number
   * ``-=`` will subtract the given number from the inherited number
+  * ``*=`` will multiply the inherited number by the given number
+  * ``/=`` will divide the inherited number by the given number
 
-Both operators also support :doc:`/units`
+``+=`` and ``-=`` also support :doc:`/units`
 
 From a design point of view, you can also extract out a base design and have your other layouts extend from them::
 
@@ -149,10 +151,10 @@ As you might expect, ``extends`` can be composed multiple times::
     x: 100
   plato:
     extends: socrates
-    x: += 10    # evaluates to 150
+    x: += 10    # evaluates to 110
   aristotle:
     extends: plato
-    x: += 20    # evaluates to 150
+    x: "*= 2"     # evaluates to 220, note that YAML requires quotes here
 
 Yes, ``extends`` has Multiple Inheritance
 -----------------------------------------
@@ -167,7 +169,8 @@ If you want to extend multiple parents, it looks like this::
     extends:
       - socrates
       - plato
-    x: += 50    # evaluates to 150
+    x: += 50    # evaluates to 150 from socrates
+    # y is going to be 200 too from Plato
 
 If multiple keys override the same keys in a parent, the later ("younger") child in the ``extends`` list takes precedent. Like this::
 
@@ -223,11 +226,14 @@ Squib Comes with Built-In Layouts
 
 Why mess with x-y coordinates when you're first prototyping your game? Just use a built-in layout to get your game to the table as quickly as possible.
 
-If your layout file is not found in the current directory, Squib will search for its own set of layout files.  The latest the development version of these can be found `on GitHub <https://github.com/andymeneely/squib/tree/master/lib/squib/layouts>`_.
+If your layout file is not found in the current directory, Squib will search for its own set of layout files.  The latest the development version of these can be found `on GitHub <https://github.com/andymeneely/squib/tree/master/lib/squib/builtin/layouts>`_.
 
 Contributions in this area are particularly welcome!!
 
-The following depictions of the layouts are generated with `this script <https://github.com/andymeneely/squib/tree/master/samples/layouts/builtin_layouts.rb>`_
+The following depictions of the layouts are generated with this script:
+
+.. literalinclude:: ../samples/layouts/builtin_layouts.rb
+  :linenos:
 
 fantasy.yml
 ~~~~~~~~~~~
@@ -272,6 +278,17 @@ hand.yml
 
 https://github.com/andymeneely/squib/tree/master/lib/squib/layouts/hand.yml
 
+
+party.yml
+~~~~~~~~~
+
+.. raw:: html
+
+  <img src="layouts/expected_layouts_builtin_party_00.png"
+    class="figure" width=350>
+
+https://github.com/andymeneely/squib/tree/master/lib/squib/layouts/party.yml
+
 playing_card.yml
 ~~~~~~~~~~~~~~~~
 
@@ -285,6 +302,17 @@ https://github.com/andymeneely/squib/tree/master/lib/squib/layouts/playing_card.
 See Layouts in Action
 ---------------------
 
-`This sample <https://github.com/andymeneely/squib/tree/master/samples/>`_ demonstrates many different ways of using and combining layouts.
+This sample, `which lives here <https://github.com/andymeneely/squib/tree/master/samples/layouts/layouts.rb>`_, demonstrates many different ways of using and combining layouts.
 
-`This sample <https://github.com/andymeneely/squib/tree/master/samples/>`_ demonstrates built-in layouts based on popular games (e.g. ``fantasy.yml`` and ``economy.yml``)
+.. literalinclude:: ../samples/layouts/layouts.rb
+  :linenos:
+
+This is ``custom-layout.yml``:
+
+.. literalinclude:: ../samples/layouts/custom-layout.yml
+  :linenos:
+
+This is ``custom-layout2.yml``:
+
+.. literalinclude:: ../samples/layouts/custom-layout2.yml
+  :linenos:

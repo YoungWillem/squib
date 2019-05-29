@@ -6,9 +6,24 @@ module Squib
   # @api private
   def cache_load_image(file)
     @img_cache ||= {}
-    @img_cache[file] || @img_cache[file] = Cairo::ImageSurface.from_png(file)
+    @img_cache[file] ||= open_png file
   end
   module_function :cache_load_image
+
+  # Open a PNG file, checking magic bytes if it's a real PNG
+  # Magic bytes taken from:
+  # https://en.wikipedia.org/wiki/List_of_file_signatures
+  # :nodoc:
+  # @api private
+  PNG_MAGIC = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
+  def open_png(file)
+    if PNG_MAGIC == File.read(file, 8).bytes
+      return Cairo::ImageSurface.from_png(file)
+    else
+      raise ArgumentError.new("ERROR: #{file} is not a PNG file")
+    end
+  end
+  module_function :open_png
 
   class Card
 
@@ -67,7 +82,12 @@ module Squib
       Squib.logger.warn 'Both an SVG file and SVG data were specified' unless file.to_s.empty? || svg_args.data.to_s.empty?
       return if (file.nil? or file.eql? '') and svg_args.data.nil? # nothing specified TODO Move this out to arg validator
       svg_args.data = File.read(file) if svg_args.data.to_s.empty?
-      svg          = RSVG::Handle.new_from_data(svg_args.data)
+      begin
+        svg = Rsvg::Handle.new_from_data(svg_args.data)
+      rescue Rsvg::Error::Failed
+        Squib.logger.error "Invalid SVG data. Is '#{file}' a valid svg file?"
+        return
+      end
       box.width    = svg.width  if box.width == :native
       box.height   = svg.height if box.height == :native
       box.width  = svg.width.to_f * box.height.to_f / svg.height.to_f if box.width == :scale
@@ -88,11 +108,11 @@ module Squib
 
         cc.operator = paint.blend unless paint.blend == :none
         if paint.mask.to_s.empty?
-          cc.render_rsvg_handle(svg, svg_args.id)
+          cc.render_rsvg_handle(svg, id: svg_args.id)
         else
           tmp = Cairo::ImageSurface.new(box.width / scale_width, box.height / scale_height)
           tmp_cc = Cairo::Context.new(tmp)
-          tmp_cc.render_rsvg_handle(svg, svg_args.id)
+          tmp_cc.render_rsvg_handle(svg, id: svg_args.id)
           cc.set_source_squibcolor(paint.mask)
           cc.mask(tmp, 0, 0)
         end

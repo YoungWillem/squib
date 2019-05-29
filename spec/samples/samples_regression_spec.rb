@@ -51,6 +51,7 @@ describe 'Squib samples' do
       saves/_saves.rb
       saves/_showcase.rb
       shapes/_draw_shapes.rb
+      shapes/_proofs.rb
       text/_embed_text.rb
       text/_text_options.rb
       units/_units.rb

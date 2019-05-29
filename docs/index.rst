@@ -21,7 +21,9 @@ Contents:
    config
    backends
    build_groups
+   sprues
    help
+   cli/index.rst
    dsl/index.rst
 
 Indices and tables

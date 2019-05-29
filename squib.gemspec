@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.specification_version = 2 if spec.respond_to? :specification_version=
   spec.required_rubygems_version = Gem::Requirement.new('>= 0') if spec.respond_to? :required_rubygems_version=
   spec.rubygems_version = '2.2.2'
-  spec.required_ruby_version = '>= 2.2.0'
+  spec.required_ruby_version = '>= 2.4.0'
 
   spec.name          = 'squib'
   spec.version       = Squib::VERSION
@@ -29,23 +29,24 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(spec|samples|docs|benchmarks)\//)
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'cairo',                 '~> 1.15.3'
-  spec.add_runtime_dependency 'gio2',                  '3.0.9' # for bug 172 # NOT 3.1.0 - broken on Linux
-  spec.add_runtime_dependency 'gobject-introspection', '3.0.9' # NOT 3.1.0 - broken on Linux
-  spec.add_runtime_dependency 'mercenary',             '~> 0.3.4'
-  spec.add_runtime_dependency 'nokogiri',              '~> 1.7.0'
-  spec.add_runtime_dependency 'pango',                 '3.0.9' # NOT 3.1.0 - broken on Linux
-  spec.add_runtime_dependency 'roo',                   '~> 2.7.0'
-  spec.add_runtime_dependency 'rsvg2',                 '3.0.9' # NOT 3.1.0 - broken on Linux
-  spec.add_runtime_dependency 'ruby-progressbar',      '~> 1.8'
+  spec.add_runtime_dependency 'cairo',                 '1.16.4'
+  spec.add_runtime_dependency 'classy_hash',           '0.2.1'
+  spec.add_runtime_dependency 'gio2',                  '3.3.6'
+  spec.add_runtime_dependency 'gobject-introspection', '3.3.6'
+  spec.add_runtime_dependency 'highline',              '2.0.2'
+  spec.add_runtime_dependency 'mercenary',             '0.3.6'
+  spec.add_runtime_dependency 'nokogiri',              '1.10.3'
+  spec.add_runtime_dependency 'pango',                 '3.3.6'
+  spec.add_runtime_dependency 'roo',                   '2.8.2'
+  spec.add_runtime_dependency 'rsvg2',                 '3.3.6'
+  spec.add_runtime_dependency 'ruby-progressbar',      '1.10.0'
 
-
-  spec.add_development_dependency 'bundler', '~> 1.13'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rspec', '~> 3.3'
-  spec.add_development_dependency 'coveralls'
-  # spec.add_development_dependency 'byebug'
-  spec.add_development_dependency 'launchy'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'coveralls', '>= 0.8.21'
   spec.add_development_dependency 'game_icons'
+  spec.add_development_dependency 'launchy'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'rspec', '~> 3.8'
 
 end

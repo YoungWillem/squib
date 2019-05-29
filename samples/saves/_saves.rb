@@ -7,7 +7,7 @@ Squib::Deck.new(width: 825, height: 1125, cards: 16) do
   rect x: 38, y: 38, width: 750, height: 1050,
        x_radius: 38, y_radius: 38, stroke: 3.0, dash: '4 4'
 
-  text str: (1..16).to_a, x: 220, y: 78, font: 'Arial 54'
+  text str: (1..16).to_a, x: 220, y: 78, font: 'Arial 18'
 
   # Here's what a regular save_png looks like for just the first card
   save_png range: 0, prefix: 'save_png_'
@@ -41,5 +41,11 @@ Squib::Deck.new(width: 825, height: 1125, cards: 16) do
   save_sheet prefix: 'save_sheet_range_',
              range: 0..5,
              columns: 2, rows: 2,
+             margin: 75, gap: 5, trim: 37
+
+  # Sheets can arrange left-to-right and right-to-left
+  save_sheet prefix: 'save_sheet_rtl_',
+             range: 0..1, rtl: true,
+             columns: 2, rows: 1,
              margin: 75, gap: 5, trim: 37
 end

@@ -1,7 +1,106 @@
 # Squib CHANGELOG
 Squib follows [semantic versioning](http://semver.org).
 
-## v0.13.0 / Unreleased
+## v0.15.0 / Unreleased
+
+Features:
+* Added check for malformed PNG files (#250, #218)
+
+Bugs
+* `trim_radius` now defaults to 0 on `save_pdf`, not 38. (#270)
+* `explode` on `xlsx` and `csv` now defaults to `qty`, not `Qty` (#262)
+
+Docs:
+* Documented the n-sided-ness of polygons and stars
+* svg: document rasterization on mask (#192)
+* Document how to run the code (#186)
+* Document some ways of using `prefix` in `save_png` (#268)
+* `showcase` option `trim_radius` defaults to 38, not 0
+* Add sample for color switch in colors docs (#274)
+
+Chores:
+* Bumped deps: Pango et al. to 3.3.6, Cairo to 1.16.4, Nokogiri to 1.10.3, Highline to 2.0.2
+
+Compatibility:
+* A LOT more pre-defined colors built into Cairo. Some of the named colors got redefined with the upgrade to the latest Cairo. This means that named colors like `:gray` and `:green` may look slightly different.
+* Dropped support for EOL'd Rubies. Minimum support is 2.4
+
+Special thanks to @lcarlsen, @Karneades
+
+## v0.14.2 / 2018-08-01
+
+Features:
+* Sprues for DriveThruCards and printandplaygames!! (#247, from @blinks)
+
+Bugs:
+* Fixed bug on circle and other shapes that had an extra stroke from a previous text call (#248)
+* Fixed extra page on all sprue saves (#246)
+* Fixed layout parsing issue with multiple inheritance (#244)
+
+Chores:
+* Bumped deps: Pango et al. to 3.2.7, Cairo to 1.15.13, Nokogiri to 1.8.4
+
+Special thanks to @blinks
+
+## v0.14.1 / 2018-03-15
+
+Chores:
+* Bumped deps: Pango et al. to 3.2.1, Cairo to 1.15.12. (Fixes an issue with Ruby 2.5 and Windows)
+
+## v0.14.0 / 2017-11-06
+
+Features:
+* `save_pdf/save_sheet` method now supports `sprue`, which allows you to define templated layouts and position your cards freely (#217) by @felixleong. See docs for how to use this _very_ powerful feature!
+* `circle` method now supports various `arc` options, so you can draw partial circles (#211) by @sparr
+* `save_sheet` method now supports `rtl` or "right-to-left", for easier duplex printing of backs (#204, #208) by @sparr
+* `yaml` method for reading in data, much like `csv` and `xlsx` by @blinks
+* Layouts now support `*=` and `/=` operators in addition to `+=` and `-=` (#200).
+* `save_pdf` method also supports `rtl` by @vador
+* New DSL methods `safe_zone` and `cut_zone` will draw a rectangle inset from the margins for quick proof checking
+* New "advanced" option for creating new projects, if you do `squib new --advanced yourgame` (@andymeneely).
+* New built-in layout: `party.yml`. (@andymeneely)
+
+Compatibility:
+* DPI is correctly respected with font sizes now. To convert to Squib v0.14+, divide your old font sizes by 3 (precisely, 300/96=3.125). By @felixleong
+
+Docs:
+* Command-line is better documented now
+* Some more examples included in various places
+
+Bugs:
+* fix save_sheet to calculate rows correctly based on range (#207) by @sparr
+
+Chores:
+* Going back to our policy of locking in our dependencies so that we don't have new gems breaking things.
+* Bumped deps, Cairo to 1.15.10 and Pango et al. to 3.1.9
+
+Special thanks to @sparr, @felixleong, @blinks, @vador for all of their work!!
+
+## v0.13.4 / 2017-07-17
+
+Bugs:
+* Bumped Pango et al. to 3.1.8 to fix the Homebrew/Mac compatibility issue in Squib v0.13.3. Install should be clean on Macs now.
+
+## v0.13.3 / 2017-07-15
+
+Bugs:
+* Fix `undefined method [] for nil:NilClass` error on `svg` (was a regression error in librsvg that we worked around.)
+* Bump dependencies to latest stable versions. Pango et al. to 3.1.7 and Cairo to 1.15.9. This fixes some compatibility issues.
+* Fixed some deprecation warnings on `text`
+
+Compatibility known issue: if you are using Homebrew on Mac, you may need to set an environment variable for this version. This should be fixed in the upcoming 3.1.8 version of Pango that is forthcoming. See this: https://github.com/ruby-gnome2/ruby-gnome2/issues/1058
+
+## v0.13.2 / 2017-01-27
+
+Bugs:
+* Bump dependencies to latest stable versions. Pango et al. to 3.1.1 and Cairo to 1.15.5. This fixes some compatibility issues we noticed on Linux and Macs.
+
+## v0.13.1 / 2017-01-06
+
+Bugs:
+* New Windows installations break because Rubygems looks for 1.15.4 and it's not there (yet). Locking into Cairo 1.15.3 and being more conservative from now on.
+
+## v0.13.0 / 2017-01-04
 
 Features:
 * `save_pdf`'s `crop marks` have a `:full` option that draw lines across the entire page.

@@ -21,6 +21,7 @@ module Squib
 
       def self.parameters
         {
+          count_format: '%02d',
           crop_margin_bottom: 0,
           crop_margin_left: 0,
           crop_margin_right: 0,
@@ -35,11 +36,14 @@ module Squib
           gap: 0,
           height: 2550,
           margin: 75,
+          prefix: 'sheet_',
           rows: :infinite,
           columns: 5,
-          trim_radius: 38,
+          trim_radius: 0,
           trim: 0,
           width: 3300,
+          range: :all,
+          rtl: false,
         }
       end
 
@@ -79,13 +83,22 @@ module Squib
 
       def validate_rows(arg)
         raise 'columns must be an integer' unless columns.respond_to? :to_i
-        return 1 if @deck_size < columns
+        count = if range == :all
+                  @deck_size
+                else
+                  count = range.to_a.length
+                end
+        return 1 if count <= columns
         return arg if arg.respond_to? :to_i
-        (@deck_size.to_i / columns.to_i).ceil
+        (count.to_f / columns.to_f).ceil
       end
 
-      def full_filename
-        "#{dir}/#{file}"
+      def full_filename(i=nil)
+        if i.nil?
+          "#{dir}/#{file}"
+        else
+          "#{dir}/#{prefix}#{count_format % i}.png"
+        end
       end
 
       def crop_coords(x, y, deck_w, deck_h)
