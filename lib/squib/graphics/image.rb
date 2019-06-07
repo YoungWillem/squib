@@ -55,7 +55,6 @@ module Squib
         cc.clip
         cc.translate(-trans.crop_x, -trans.crop_y)
 
-
         cc.set_source(png, box.x, box.y)
         cc.operator = paint.blend unless paint.blend == :none
         if paint.mask.empty?
@@ -64,6 +63,8 @@ module Squib
           cc.set_source_squibcolor(paint.mask)
           cc.mask(png, box.x, box.y)
         end
+        # require 'byebug'; byebug
+        puts "LOL drawing again?!?"
       end
     end
 
