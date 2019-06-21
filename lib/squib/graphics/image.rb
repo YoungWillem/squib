@@ -63,8 +63,6 @@ module Squib
           cc.set_source_squibcolor(paint.mask)
           cc.mask(png, box.x, box.y)
         end
-        # require 'byebug'; byebug
-        puts "LOL drawing again?!?"
       end
     end
 

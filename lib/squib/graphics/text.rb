@@ -101,6 +101,7 @@ module Squib
                 rule[:adjust].dy[@index] +
                 compute_valign(layout, valign, rule[:box].height[@index])
           rule[:draw].call(self, x, y)
+          rule[:draw] = Proc.new {} # avoid double-draw, bug #278
           cxt.reset_clip
           [cxt, att, do_path]
         end
