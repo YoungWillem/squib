@@ -30,7 +30,7 @@ The ``#`` at the beginning is optional, but encouraged for readability. In layou
 by name
 ^^^^^^^
 
-Under the hood, Squib uses the rcairo `color parser <https://github.com/rcairo/rcairo/blob/master/lib/cairo/color.rb>`_ to accept around 300 named colors. The full list can be found `here <https://github.com/rcairo/rcairo/blob/master/lib/cairo/colors.rb>`_.
+Under the hood, Squib uses the rcairo `color parser <https://github.com/rcairo/rcairo/blob/master/lib/cairo/color.rb>`_ to accept around 300 named colors. The full list can be found `here <https://www.rubydoc.info/github/rcairo/rcairo/Cairo/Color>`_.
 
 Names of colors can be either strings or symbols, and case does not matter. Multiple words are separated by underscores. For example, ``'white'``, ``:burnt_orange``, or ``'ALIZARIN_CRIMSON'`` are all acceptable names.
 
